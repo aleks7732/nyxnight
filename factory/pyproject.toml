@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nyxnight-factory"
+version = "0.1.0"
+description = "Google ADK workflow that creates the standalone NyxNight application"
+requires-python = ">=3.12"
+dependencies = [
+  "google-adk==2.4.0",
+  "fastapi>=0.116,<1",
+  "uvicorn>=0.35,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2",
+  "httpx>=0.28",
+  "mypy>=1.17",
+  "pytest>=8.4",
+  "ruff>=0.12",
+]
+
+[project.scripts]
+nyxnight-factory = "nyxnight_factory.run:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["nyxnight_factory"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

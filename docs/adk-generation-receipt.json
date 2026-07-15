@@ -1,0 +1,439 @@
+{
+  "agents": [
+    "requirements_agent",
+    "backend_builder",
+    "frontend_builder",
+    "verification_agent"
+  ],
+  "app_runtime_uses_adk": false,
+  "events": [
+    {
+      "author": "requirements_agent",
+      "state_delta": {
+        "stage:requirements": {
+          "agent": "requirements_agent",
+          "files": [
+            {
+              "path": ".gitignore",
+              "sha256": "de9a97bcfaab60200a0bf1a63b7da0d7babb054ccfa2492586da35fa943952a6"
+            },
+            {
+              "path": "README.md",
+              "sha256": "bc150643ae18c68e5addbf75ac5456d78757a0e22456be1ea1e273af8f29ec29"
+            },
+            {
+              "path": "docs/PRODUCT_SPEC.md",
+              "sha256": "9dd54d992dbff77f2c5c1a82f05ff524ad0040ed9f6c7b2a2ff1a477e182a17b"
+            }
+          ],
+          "status": "complete"
+        }
+      },
+      "text": "requirements: emitted 3 files"
+    },
+    {
+      "author": "backend_builder",
+      "state_delta": {
+        "stage:backend": {
+          "agent": "backend_builder",
+          "files": [
+            {
+              "path": "pyproject.toml",
+              "sha256": "ae8e1ff9025f66b1f2c8bb13708fe4e748c7998adac02e4342fb2fbfc63aaf3f"
+            },
+            {
+              "path": "nyxnight/__init__.py",
+              "sha256": "2e983998d2d7c31b108b9cbce3cde1ee58c20422075928d4b36fba429505d996"
+            },
+            {
+              "path": "nyxnight/__main__.py",
+              "sha256": "8531f056448ace8df437d2c652e728cc918f8d89dc65d0946e2a69df6a53f8e4"
+            },
+            {
+              "path": "nyxnight/models.py",
+              "sha256": "adc17000a0526d03fef6023d49d584cb506d474a4250ef7dae1d92bb03f19510"
+            },
+            {
+              "path": "nyxnight/planner.py",
+              "sha256": "26702585fad4c2cc1cca12c7e793896d130f7ef542f3ffaaf77bd62f283e45ca"
+            },
+            {
+              "path": "nyxnight/api.py",
+              "sha256": "04ccb88f96b3b652a1aacb99c7c12c6fa6e2af19bd20d4c9d1224cffd63d52a8"
+            },
+            {
+              "path": "nyxnight/cli.py",
+              "sha256": "baac16da37192ae145e487834cc48d067240a8c2f5380ea3a0ff8fe8f1286552"
+            },
+            {
+              "path": "tests/test_api.py",
+              "sha256": "f2d2a73f7794c16e79b4ce8b776c9e5ec107c03cdc5a902bd9386749a604c94b"
+            },
+            {
+              "path": "tests/test_planner.py",
+              "sha256": "313b1bdfa626d628facad5392ec2f5b346fe8e93dba47ba890dadfa213734a21"
+            },
+            {
+              "path": "scripts/verify.sh",
+              "sha256": "c196b8d73449e95ccb0060345eda3588742e21d1fa57e4282b137032564a5869"
+            }
+          ],
+          "status": "complete"
+        }
+      },
+      "text": "backend: emitted 10 files"
+    },
+    {
+      "author": "frontend_builder",
+      "state_delta": {
+        "stage:frontend": {
+          "agent": "frontend_builder",
+          "files": [
+            {
+              "path": "nyxnight/web/index.html",
+              "sha256": "15bb040344d0d692fc53b83b372c5fcb13a81316cc7d653ce2021f5703c7daf0"
+            },
+            {
+              "path": "nyxnight/web/styles.css",
+              "sha256": "69d51eec5e6245e341d2dfb42f10e31e9bf2117759b6d978488fa0cd7c652a2c"
+            },
+            {
+              "path": "nyxnight/web/app.js",
+              "sha256": "8d01e9e9461a0626e09feb30fd48fd50e576522c6fabe2add76c61cec05c5912"
+            },
+            {
+              "path": "tests/test_ui_contract.py",
+              "sha256": "dbe00dc2aaa77f5eaf5308f5b39eca38bb3fb32a9958a89c98bd013faac5250d"
+            }
+          ],
+          "status": "complete"
+        }
+      },
+      "text": "frontend: emitted 4 files"
+    },
+    {
+      "author": "verification_agent",
+      "state_delta": {
+        "stage:verification": {
+          "agent": "verification_agent",
+          "commands": [
+            {
+              "command": [
+                "/home/maver/NyxNightFactory/.venv/bin/python",
+                "-m",
+                "pip",
+                "install",
+                "-q",
+                "-e",
+                ".[dev]"
+              ],
+              "exit_code": 0,
+              "stderr_tail": "",
+              "stdout_tail": ""
+            },
+            {
+              "command": [
+                "bash",
+                "scripts/verify.sh"
+              ],
+              "exit_code": 0,
+              "stderr_tail": "* Creating isolated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling>=1.27\n* Getting build dependencies for wheel...\n* Building wheel...\n",
+              "stdout_tail": "[1/8] Python compilation\n[2/8] Ruff lint and format\nAll checks passed!\n9 files already formatted\n[3/8] Strict mypy\nSuccess: no issues found in 6 source files\n[4/8] Pytest\n.........                                                                [100%]\n=============================== warnings summary ===============================\n../NyxNightFactory/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /home/maver/NyxNightFactory/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n9 passed, 1 warning in 0.18s\n[5/8] JavaScript syntax\n[6/8] Dependency health\nNo broken requirements found.\n[7/8] Standalone-runtime boundary\napplication-adk-runtime-dependency=absent\n[8/8] Wheel build and asset inspection\nwheel=.verify-dist/nyxnight-0.1.0-py3-none-any.whl assets=present adk-dependency=absent\nNyxNight standalone verifier: PASS\n"
+            }
+          ],
+          "status": "complete"
+        }
+      },
+      "text": "verification: generated app PASS"
+    }
+  ],
+  "final_state": {
+    "output_root": "/home/maver/NyxNight",
+    "request": "Create NyxNight as a standalone application",
+    "runtime_adk_dependency_allowed": false,
+    "stage:backend": {
+      "agent": "backend_builder",
+      "files": [
+        {
+          "path": "pyproject.toml",
+          "sha256": "ae8e1ff9025f66b1f2c8bb13708fe4e748c7998adac02e4342fb2fbfc63aaf3f"
+        },
+        {
+          "path": "nyxnight/__init__.py",
+          "sha256": "2e983998d2d7c31b108b9cbce3cde1ee58c20422075928d4b36fba429505d996"
+        },
+        {
+          "path": "nyxnight/__main__.py",
+          "sha256": "8531f056448ace8df437d2c652e728cc918f8d89dc65d0946e2a69df6a53f8e4"
+        },
+        {
+          "path": "nyxnight/models.py",
+          "sha256": "adc17000a0526d03fef6023d49d584cb506d474a4250ef7dae1d92bb03f19510"
+        },
+        {
+          "path": "nyxnight/planner.py",
+          "sha256": "26702585fad4c2cc1cca12c7e793896d130f7ef542f3ffaaf77bd62f283e45ca"
+        },
+        {
+          "path": "nyxnight/api.py",
+          "sha256": "04ccb88f96b3b652a1aacb99c7c12c6fa6e2af19bd20d4c9d1224cffd63d52a8"
+        },
+        {
+          "path": "nyxnight/cli.py",
+          "sha256": "baac16da37192ae145e487834cc48d067240a8c2f5380ea3a0ff8fe8f1286552"
+        },
+        {
+          "path": "tests/test_api.py",
+          "sha256": "f2d2a73f7794c16e79b4ce8b776c9e5ec107c03cdc5a902bd9386749a604c94b"
+        },
+        {
+          "path": "tests/test_planner.py",
+          "sha256": "313b1bdfa626d628facad5392ec2f5b346fe8e93dba47ba890dadfa213734a21"
+        },
+        {
+          "path": "scripts/verify.sh",
+          "sha256": "c196b8d73449e95ccb0060345eda3588742e21d1fa57e4282b137032564a5869"
+        }
+      ],
+      "status": "complete"
+    },
+    "stage:frontend": {
+      "agent": "frontend_builder",
+      "files": [
+        {
+          "path": "nyxnight/web/index.html",
+          "sha256": "15bb040344d0d692fc53b83b372c5fcb13a81316cc7d653ce2021f5703c7daf0"
+        },
+        {
+          "path": "nyxnight/web/styles.css",
+          "sha256": "69d51eec5e6245e341d2dfb42f10e31e9bf2117759b6d978488fa0cd7c652a2c"
+        },
+        {
+          "path": "nyxnight/web/app.js",
+          "sha256": "8d01e9e9461a0626e09feb30fd48fd50e576522c6fabe2add76c61cec05c5912"
+        },
+        {
+          "path": "tests/test_ui_contract.py",
+          "sha256": "dbe00dc2aaa77f5eaf5308f5b39eca38bb3fb32a9958a89c98bd013faac5250d"
+        }
+      ],
+      "status": "complete"
+    },
+    "stage:requirements": {
+      "agent": "requirements_agent",
+      "files": [
+        {
+          "path": ".gitignore",
+          "sha256": "de9a97bcfaab60200a0bf1a63b7da0d7babb054ccfa2492586da35fa943952a6"
+        },
+        {
+          "path": "README.md",
+          "sha256": "bc150643ae18c68e5addbf75ac5456d78757a0e22456be1ea1e273af8f29ec29"
+        },
+        {
+          "path": "docs/PRODUCT_SPEC.md",
+          "sha256": "9dd54d992dbff77f2c5c1a82f05ff524ad0040ed9f6c7b2a2ff1a477e182a17b"
+        }
+      ],
+      "status": "complete"
+    },
+    "stage:verification": {
+      "agent": "verification_agent",
+      "commands": [
+        {
+          "command": [
+            "/home/maver/NyxNightFactory/.venv/bin/python",
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            "-e",
+            ".[dev]"
+          ],
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": ""
+        },
+        {
+          "command": [
+            "bash",
+            "scripts/verify.sh"
+          ],
+          "exit_code": 0,
+          "stderr_tail": "* Creating isolated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling>=1.27\n* Getting build dependencies for wheel...\n* Building wheel...\n",
+          "stdout_tail": "[1/8] Python compilation\n[2/8] Ruff lint and format\nAll checks passed!\n9 files already formatted\n[3/8] Strict mypy\nSuccess: no issues found in 6 source files\n[4/8] Pytest\n.........                                                                [100%]\n=============================== warnings summary ===============================\n../NyxNightFactory/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  /home/maver/NyxNightFactory/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n9 passed, 1 warning in 0.18s\n[5/8] JavaScript syntax\n[6/8] Dependency health\nNo broken requirements found.\n[7/8] Standalone-runtime boundary\napplication-adk-runtime-dependency=absent\n[8/8] Wheel build and asset inspection\nwheel=.verify-dist/nyxnight-0.1.0-py3-none-any.whl assets=present adk-dependency=absent\nNyxNight standalone verifier: PASS\n"
+        }
+      ],
+      "status": "complete"
+    }
+  },
+  "generated_at_utc": "2026-07-15T21:43:09.581405+00:00",
+  "manifest": [
+    {
+      "path": ".gitignore",
+      "sha256": "de9a97bcfaab60200a0bf1a63b7da0d7babb054ccfa2492586da35fa943952a6"
+    },
+    {
+      "path": "README.md",
+      "sha256": "bc150643ae18c68e5addbf75ac5456d78757a0e22456be1ea1e273af8f29ec29"
+    },
+    {
+      "path": "docs/PRODUCT_SPEC.md",
+      "sha256": "9dd54d992dbff77f2c5c1a82f05ff524ad0040ed9f6c7b2a2ff1a477e182a17b"
+    },
+    {
+      "path": "factory/README.md",
+      "sha256": "06e5043407fa866a18cfb19de7103b30ed838885e656cc291e6c2a6cbe3aef1a"
+    },
+    {
+      "path": "factory/blueprint/.gitignore",
+      "sha256": "de9a97bcfaab60200a0bf1a63b7da0d7babb054ccfa2492586da35fa943952a6"
+    },
+    {
+      "path": "factory/blueprint/README.md",
+      "sha256": "bc150643ae18c68e5addbf75ac5456d78757a0e22456be1ea1e273af8f29ec29"
+    },
+    {
+      "path": "factory/blueprint/docs/PRODUCT_SPEC.md",
+      "sha256": "9dd54d992dbff77f2c5c1a82f05ff524ad0040ed9f6c7b2a2ff1a477e182a17b"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/__init__.py",
+      "sha256": "2e983998d2d7c31b108b9cbce3cde1ee58c20422075928d4b36fba429505d996"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/__main__.py",
+      "sha256": "8531f056448ace8df437d2c652e728cc918f8d89dc65d0946e2a69df6a53f8e4"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/api.py",
+      "sha256": "04ccb88f96b3b652a1aacb99c7c12c6fa6e2af19bd20d4c9d1224cffd63d52a8"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/cli.py",
+      "sha256": "baac16da37192ae145e487834cc48d067240a8c2f5380ea3a0ff8fe8f1286552"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/models.py",
+      "sha256": "adc17000a0526d03fef6023d49d584cb506d474a4250ef7dae1d92bb03f19510"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/planner.py",
+      "sha256": "26702585fad4c2cc1cca12c7e793896d130f7ef542f3ffaaf77bd62f283e45ca"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/web/app.js",
+      "sha256": "8d01e9e9461a0626e09feb30fd48fd50e576522c6fabe2add76c61cec05c5912"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/web/index.html",
+      "sha256": "15bb040344d0d692fc53b83b372c5fcb13a81316cc7d653ce2021f5703c7daf0"
+    },
+    {
+      "path": "factory/blueprint/nyxnight/web/styles.css",
+      "sha256": "69d51eec5e6245e341d2dfb42f10e31e9bf2117759b6d978488fa0cd7c652a2c"
+    },
+    {
+      "path": "factory/blueprint/pyproject.toml",
+      "sha256": "ae8e1ff9025f66b1f2c8bb13708fe4e748c7998adac02e4342fb2fbfc63aaf3f"
+    },
+    {
+      "path": "factory/blueprint/scripts/verify.sh",
+      "sha256": "c196b8d73449e95ccb0060345eda3588742e21d1fa57e4282b137032564a5869"
+    },
+    {
+      "path": "factory/blueprint/tests/test_api.py",
+      "sha256": "f2d2a73f7794c16e79b4ce8b776c9e5ec107c03cdc5a902bd9386749a604c94b"
+    },
+    {
+      "path": "factory/blueprint/tests/test_planner.py",
+      "sha256": "313b1bdfa626d628facad5392ec2f5b346fe8e93dba47ba890dadfa213734a21"
+    },
+    {
+      "path": "factory/blueprint/tests/test_ui_contract.py",
+      "sha256": "dbe00dc2aaa77f5eaf5308f5b39eca38bb3fb32a9958a89c98bd013faac5250d"
+    },
+    {
+      "path": "factory/nyxnight_factory/__init__.py",
+      "sha256": "058325ac41fa38e484c83d99322c8d0bff0183c530c13708bd62b4bc68109267"
+    },
+    {
+      "path": "factory/nyxnight_factory/agents.py",
+      "sha256": "db8dbd996cc8ad5bd4f31f724c598faed54e4ec386a92d4d5ddaf9dc0a929f3f"
+    },
+    {
+      "path": "factory/nyxnight_factory/run.py",
+      "sha256": "5c81b22f4037c54c1e1765f8f33f6986a85c068a519e86da5177a6838dcdf04a"
+    },
+    {
+      "path": "factory/pyproject.toml",
+      "sha256": "377dd615527fc100e02a7c9c3545910c0ef07557ad556ba7f08b95bc2007a951"
+    },
+    {
+      "path": "factory/tests/test_factory.py",
+      "sha256": "3954ab689dd6c28f30c204ea5b302887324f1b33c8a79ec048ae1287b6ffd6b1"
+    },
+    {
+      "path": "nyxnight/__init__.py",
+      "sha256": "2e983998d2d7c31b108b9cbce3cde1ee58c20422075928d4b36fba429505d996"
+    },
+    {
+      "path": "nyxnight/__main__.py",
+      "sha256": "8531f056448ace8df437d2c652e728cc918f8d89dc65d0946e2a69df6a53f8e4"
+    },
+    {
+      "path": "nyxnight/api.py",
+      "sha256": "04ccb88f96b3b652a1aacb99c7c12c6fa6e2af19bd20d4c9d1224cffd63d52a8"
+    },
+    {
+      "path": "nyxnight/cli.py",
+      "sha256": "baac16da37192ae145e487834cc48d067240a8c2f5380ea3a0ff8fe8f1286552"
+    },
+    {
+      "path": "nyxnight/models.py",
+      "sha256": "adc17000a0526d03fef6023d49d584cb506d474a4250ef7dae1d92bb03f19510"
+    },
+    {
+      "path": "nyxnight/planner.py",
+      "sha256": "26702585fad4c2cc1cca12c7e793896d130f7ef542f3ffaaf77bd62f283e45ca"
+    },
+    {
+      "path": "nyxnight/web/app.js",
+      "sha256": "8d01e9e9461a0626e09feb30fd48fd50e576522c6fabe2add76c61cec05c5912"
+    },
+    {
+      "path": "nyxnight/web/index.html",
+      "sha256": "15bb040344d0d692fc53b83b372c5fcb13a81316cc7d653ce2021f5703c7daf0"
+    },
+    {
+      "path": "nyxnight/web/styles.css",
+      "sha256": "69d51eec5e6245e341d2dfb42f10e31e9bf2117759b6d978488fa0cd7c652a2c"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "ae8e1ff9025f66b1f2c8bb13708fe4e748c7998adac02e4342fb2fbfc63aaf3f"
+    },
+    {
+      "path": "scripts/verify.sh",
+      "sha256": "c196b8d73449e95ccb0060345eda3588742e21d1fa57e4282b137032564a5869"
+    },
+    {
+      "path": "tests/test_api.py",
+      "sha256": "f2d2a73f7794c16e79b4ce8b776c9e5ec107c03cdc5a902bd9386749a604c94b"
+    },
+    {
+      "path": "tests/test_planner.py",
+      "sha256": "313b1bdfa626d628facad5392ec2f5b346fe8e93dba47ba890dadfa213734a21"
+    },
+    {
+      "path": "tests/test_ui_contract.py",
+      "sha256": "dbe00dc2aaa77f5eaf5308f5b39eca38bb3fb32a9958a89c98bd013faac5250d"
+    }
+  ],
+  "output_root": "/home/maver/NyxNight",
+  "runner_class": "google.adk.runners.Runner",
+  "schema": "nyxnight.adk-generation-receipt/v1",
+  "session_service_class": "google.adk.sessions.in_memory_session_service.InMemorySessionService",
+  "workflow": "nyxnight_creation_workflow",
+  "workflow_class": "google.adk.agents.sequential_agent.SequentialAgent"
+}
