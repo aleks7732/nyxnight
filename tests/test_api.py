@@ -43,6 +43,20 @@ def test_plan_contract() -> None:
     assert body["estimated_total_per_person"] <= 140
 
 
+def test_los_angeles_response_exposes_working_stop_actions() -> None:
+    request_body = payload()
+    request_body["city"] = "los angeles"
+    request_body["vibe"] = "warm live-jazz"
+    response = client.post("/api/plan", json=request_body)
+    assert response.status_code == 200
+    body = response.json()
+    assert body["city"] == "Los Angeles"
+    assert body["stops"][0]["name"] == "Opening Table — Los Angeles"
+    assert body["stops"][0]["action"]["label"] == "Find a table"
+    assert body["stops"][1]["name"] == "Live-Jazz Feature — Los Angeles"
+    assert body["stops"][1]["action"]["url"].startswith("https://")
+
+
 def test_invalid_window_is_bounded_validation_error() -> None:
     invalid = payload()
     invalid["end_time"] = "19:00"

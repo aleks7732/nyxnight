@@ -6,7 +6,8 @@ Important architecture boundary:
 
 - `factory/` is the Google ADK creator and preserved provenance.
 - `nyxnight/` is the generated application.
-- The application has no Google ADK runtime dependency and makes no model or network call in demo planning.
+- The application has no Google ADK runtime dependency and makes no model or network call while shaping a route.
+- Each stop provides an explicit user-opened live-search handoff for current places or events; no result is presented as a booked or verified venue.
 
 ## Run
 

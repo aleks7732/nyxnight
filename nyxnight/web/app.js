@@ -27,21 +27,41 @@ function render(plan) {
   setText(document.getElementById('result-summary'), plan.summary);
   setText(document.getElementById('result-cost'), `$${plan.estimated_total_per_person.toFixed(2)} / person`);
   stopsNode.replaceChildren();
-  plan.stops.forEach((stop) => {
+  plan.stops.forEach((stop, index) => {
     const article = element('article', 'stop');
-    article.appendChild(element('p', 'time', `${stop.start_time} — ${stop.end_time}`));
-    const body = element('div');
+    const schedule = element('div', 'stop-schedule');
+    schedule.appendChild(element('p', 'stop-number', `${String(index + 1).padStart(2, '0')} / 03`));
+    schedule.appendChild(element('p', 'time', `${stop.start_time} — ${stop.end_time}`));
+    article.appendChild(schedule);
+
+    const body = element('div', 'stop-body');
+    body.appendChild(element('p', 'stop-category', `${stop.category} · live search handoff`));
     body.appendChild(element('h3', '', stop.name));
-    body.appendChild(element('p', '', `${stop.category} · ${stop.reason}`));
-    body.appendChild(element('p', '', stop.verification_note));
+    body.appendChild(element('p', 'stop-reason', stop.reason));
+    const verification = element('p', 'verification-note');
+    verification.appendChild(element('strong', '', 'Check first. '));
+    verification.appendChild(document.createTextNode(stop.verification_note));
+    body.appendChild(verification);
+
+    const action = element('a', 'stop-action', stop.action.label);
+    action.href = stop.action.url;
+    action.target = '_blank';
+    action.rel = 'noopener noreferrer';
+    action.setAttribute('aria-label', `${stop.action.label} for ${stop.name} (opens live search)`);
+    action.appendChild(document.createTextNode(' ↗'));
+    body.appendChild(action);
     article.appendChild(body);
-    article.appendChild(element('p', 'price', `$${stop.estimated_cost_per_person.toFixed(2)}`));
+    const budget = element('div', 'stop-budget');
+    budget.appendChild(element('span', '', 'ALLOWANCE'));
+    budget.appendChild(element('p', 'price', `$${stop.estimated_cost_per_person.toFixed(2)}`));
+    article.appendChild(budget);
     stopsNode.appendChild(article);
   });
   listItems(transitNode, plan.transit_notes);
   listItems(caveatsNode, plan.caveats);
   results.hidden = false;
-  results.focus();
+  results.focus({ preventScroll: true });
+  results.scrollIntoView({ block: 'start' });
 }
 
 function payload() {
@@ -71,7 +91,7 @@ async function submit(event) {
     const body = await response.json();
     if (!response.ok) throw new Error(body.detail?.[0]?.msg || 'Planning failed.');
     render(body);
-    setText(statusNode, 'Route ready. Verify real venues before leaving.');
+    setText(statusNode, 'Route ready. Use the Crail buttons to find current places.');
   } catch (error) {
     results.hidden = true;
     setText(statusNode, error instanceof Error ? error.message : 'Planning failed.');

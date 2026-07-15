@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import date, time
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 
 
 def clock_minutes(value: time) -> int:
@@ -44,6 +44,11 @@ class PlanRequest(BaseModel):
         return self
 
 
+class StopAction(BaseModel):
+    label: str = Field(min_length=1, max_length=80)
+    url: HttpUrl
+
+
 class Stop(BaseModel):
     name: str
     category: str
@@ -52,6 +57,7 @@ class Stop(BaseModel):
     estimated_cost_per_person: float = Field(ge=0)
     reason: str
     verification_note: str
+    action: StopAction
 
 
 class PlanResponse(BaseModel):

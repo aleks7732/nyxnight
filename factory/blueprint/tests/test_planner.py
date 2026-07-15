@@ -51,6 +51,26 @@ def test_zero_budget_and_overnight_window() -> None:
     assert plan.stops[-1].end_time == "01:00"
 
 
+def test_los_angeles_route_has_honest_city_aware_search_handoffs() -> None:
+    plan = create_plan(request(city="los angeles"))
+    opening, feature, closing = plan.stops
+
+    assert plan.city == "Los Angeles"
+    assert opening.name == "Opening Table — Los Angeles"
+    assert opening.action.label == "Find a table"
+    assert "Los+Angeles" in str(opening.action.url)
+    assert "Crail Table" not in opening.name
+
+    assert feature.name == "Live-Jazz Feature — Los Angeles"
+    assert feature.action.label == "Find live jazz"
+    assert "live+jazz" in str(feature.action.url).casefold()
+    assert "2027-10-17" in str(feature.action.url)
+    assert feature.name != "After-Dark Feature"
+
+    assert closing.action.label == "Find a closing stop"
+    assert all(stop.action.url.scheme == "https" for stop in plan.stops)
+
+
 def test_short_window_rejected() -> None:
     with pytest.raises(ValidationError):
         request(start_time=time(18, 0), end_time=time(19, 0))

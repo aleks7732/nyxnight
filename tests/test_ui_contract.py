@@ -23,6 +23,12 @@ def test_required_ui_contract() -> None:
     assert "prefers-reduced-motion" in css
     assert ":focus-visible" in css
     assert "/api/plan" in js
+    assert "stop.action.url" in js
+    assert "noopener noreferrer" in js
+    assert ".stop-action" in css
+    assert "scroll-margin-top" in css
+    assert "preventScroll: true" in js
+    assert "scrollIntoView" in js
 
 
 def test_frontend_has_no_html_parsing_sink_or_external_dependency() -> None:

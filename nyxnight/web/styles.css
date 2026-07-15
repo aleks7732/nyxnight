@@ -28,6 +28,7 @@ h1 em { color: var(--crail); font-weight: 400; }
 .lede { max-width: 620px; color: var(--muted); font-size: clamp(1rem, 2vw, 1.3rem); line-height: 1.6; }
 
 .planner-shell, .results { padding: 5rem 0; border-bottom: 1px solid var(--line); }
+.results { scroll-margin-top: 4.5rem; }
 .section-heading { display: grid; grid-template-columns: 160px 1fr; align-items: baseline; margin-bottom: 2.2rem; }
 .section-heading h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 400; }
 .form-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
@@ -45,10 +46,19 @@ button[disabled] { opacity: .55; cursor: wait; }
 .result-intro { display: flex; justify-content: space-between; gap: 2rem; align-items: start; margin-bottom: 2rem; color: var(--muted); }
 .cost { flex: 0 0 auto; color: var(--paper); font-family: Georgia, serif; font-size: 2rem; }
 .stops { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.stop { display: grid; grid-template-columns: 130px 1fr auto; gap: 1.5rem; padding: 1.6rem; background: var(--surface); }
+.stop { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 1.8rem; padding: 1.8rem; background: var(--surface); }
+.stop-schedule { align-self: start; }
+.stop-number, .stop-category, .stop-budget span { margin: 0 0 .55rem; color: var(--muted); font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .stop .time { color: var(--crail); font-weight: 900; }
+.stop-body { min-width: 0; }
 .stop h3 { margin: 0 0 .4rem; font-family: Georgia, serif; font-size: 1.7rem; font-weight: 400; }
 .stop p { margin: .35rem 0; color: var(--muted); line-height: 1.5; }
+.stop .stop-reason { color: var(--paper); }
+.stop .verification-note { margin-top: .75rem; padding-left: .8rem; border-left: 2px solid var(--crail); font-size: .9rem; }
+.verification-note strong { color: var(--crail); }
+.stop-action { display: inline-flex; align-items: center; margin-top: 1.1rem; border: 1px solid var(--crail); padding: .7rem .9rem; color: var(--paper); font-size: .78rem; font-weight: 900; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; }
+.stop-action:hover { background: var(--crail); color: var(--black); }
+.stop-budget { min-width: 86px; text-align: right; }
 .stop .price { color: var(--paper); font-weight: 800; }
 .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2rem; background: var(--line); }
 .notes-grid article { padding: 1.5rem; background: var(--raised); }
